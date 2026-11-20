@@ -1,4 +1,7 @@
 import express from 'express';
+import crypto from 'node:crypto';
+import { hashPassword } from '../crypto.js';
+import { teamForOwner, teamOwner, memberFor } from '../team.js';
 import { DateTime } from 'luxon';
 import { config } from '../config.js';
 import { db } from '../db.js';
@@ -20,7 +23,91 @@ appRouter.use((req, res, next) => {
 });
 appRouter.use(requireUser);
 
-const uid = (req) => req.user.id;
+// Účty zaměstnanců vidí jen své údaje; majitel může vybrat člena týmu.
+const uid = (req) => req.teamTarget || req.user.id;
+appRouter.use((req,res,next)=>{
+  const membership=db.prepare('SELECT active FROM team_members WHERE member_id=?').get(req.user.id);
+  if(membership && !membership.active) return next(badRequest('Účet zaměstnance je deaktivovaný.'));
+  const target = req.get('X-Slotiva-Barber');
+  if (target && teamOwner(req.user.id) === req.user.id) {
+    try { req.teamTarget = memberFor(req.user.id, Number(target)); } catch(e) { return next(e); }
+  }
+  next();
+});
+
+appRouter.get('/team', (req,res)=>{
+  const ownerId = teamOwner(req.user.id);
+  res.json({isOwner:ownerId===req.user.id, ownerId, members: teamForOwner(ownerId)});
+});
+appRouter.post('/team', async (req,res)=>{
+  if (teamOwner(req.user.id)!==req.user.id) throw badRequest('Tým může spravovat jen majitel.');
+  const {name,email,password}=req.body||{};
+  if (!['Kikin','Honza'].includes(String(name||'').trim()) && !String(name||'').trim()) throw badRequest('Vyplňte jméno.');
+  const member=await users.registerUser({name,email,password});
+  db.prepare('INSERT INTO team_members(owner_id,member_id,display_name) VALUES(?,?,?)').run(req.user.id,member.id,member.name);
+  db.prepare('DELETE FROM services WHERE user_id=?').run(member.id);
+  for (const [label,price,duration] of [['Pánský střih',390,30],['Dětský střih',290,25],['Combo',590,45]]) createService(member.id,{name:label,price,durationMin:duration,description:'',colorId:'9'});
+  res.status(201).json({ok:true});
+});
+appRouter.post('/team/demo', (req,res)=>{
+  if (teamOwner(req.user.id)!==req.user.id) throw badRequest('Demo může spustit jen majitel.');
+  const members=teamForOwner(req.user.id).filter(m=>m.active);
+  if(!members.length) throw badRequest('Nejdřív vytvořte účty barberů.');
+  const names=['Petr Dvořák','Jakub Novák','Martin Svoboda','Tomáš Beneš','David Král','Filip Marek','Adam Dvořák','Lukáš Černý'];
+  let created=0;
+  for(const member of members){
+    const marker=`pulz-team-demo:${member.id}`;
+    if(db.prepare('SELECT 1 FROM kv WHERE key=?').get(marker))continue;
+    const services=db.prepare('SELECT * FROM services WHERE user_id=? AND active=1').all(member.id);
+    if(!services.length)continue;
+    const insert=db.prepare(`INSERT INTO bookings (user_id,code,cancel_token,service_id,service_name,color_id,price,start_utc,end_utc,customer_name,customer_email,status,source) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,'demo')`);
+    for(let offset=-21;offset<=14;offset++){
+      const date=new Date();date.setUTCHours(0,0,0,0);date.setUTCDate(date.getUTCDate()+offset);
+      if([0,6].includes(date.getUTCDay()))continue;
+      for(let slot=0;slot<4;slot++){
+        if((offset+slot+member.id)%5===0)continue;
+        const service=services[(offset+slot+1000)%services.length];
+        const start=new Date(date);start.setUTCHours(8+slot*2,0,0,0);
+        const end=new Date(start.getTime()+service.duration_min*60000);
+        const person=names[(offset+slot+member.id+1000)%names.length];
+        const status=offset<0 && slot===3 && offset%4===0?'cancelled':'confirmed';
+        insert.run(member.id,crypto.randomBytes(6).toString('hex').toUpperCase(),crypto.randomBytes(24).toString('base64url'),service.id,service.name,service.color_id,service.price,start.toISOString(),end.toISOString(),person,`demo${created}@example.com`,status);
+        created++;
+      }
+    }
+    db.prepare('INSERT INTO kv(key,value) VALUES(?,?)').run(marker,new Date().toISOString());
+  }
+  res.json({ok:true,created});
+});
+
+// Majitel nastaví skutečný přihlašovací e-mail a heslo demo zaměstnanci.
+appRouter.post('/team/:id/activate', async (req,res)=>{
+  if(teamOwner(req.user.id)!==req.user.id) throw badRequest('Účty může aktivovat jen majitel.');
+  const memberId=Number(req.params.id);
+  if(!db.prepare('SELECT 1 FROM team_members WHERE owner_id=? AND member_id=?').get(req.user.id,memberId)) throw badRequest('Člen týmu neexistuje.');
+  const email=String(req.body?.email||'').trim().toLowerCase();
+  const password=req.body?.password;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254) throw badRequest('Zadejte platný e-mail.');
+  if(typeof password!=='string'||password.length<8||password.length>200) throw badRequest('Heslo musí mít 8–200 znaků.');
+  const existing=users.getUserByEmail(email);
+  if(existing&&existing.id!==memberId) throw badRequest('Tento e-mail už někdo používá.');
+  const hash=await hashPassword(password);
+  db.prepare('UPDATE users SET email=?,password_hash=?,session_version=session_version+1 WHERE id=?').run(email,hash,memberId);
+  res.json({ok:true});
+});
+
+appRouter.patch('/team/:id', (req,res)=>{
+  if (teamOwner(req.user.id)!==req.user.id) throw badRequest('Tým může spravovat jen majitel.');
+  const memberId=Number(req.params.id);
+  const member=db.prepare('SELECT * FROM team_members WHERE owner_id=? AND member_id=?').get(req.user.id,memberId);
+  if(!member) throw badRequest('Člen týmu neexistuje.');
+  const name=String(req.body?.name??member.display_name).trim().slice(0,80);
+  if(!name) throw badRequest('Jméno je povinné.');
+  const active=req.body?.active===undefined?member.active:(req.body.active?1:0);
+  db.prepare('UPDATE team_members SET display_name=?,active=? WHERE owner_id=? AND member_id=?').run(name,active,req.user.id,memberId);
+  res.json({ok:true});
+});
+
 const bookingUrl = (user) => `${config.baseUrl}/${user.slug}`;
 
 function onboarding(userId) {
@@ -45,6 +132,7 @@ appRouter.get('/meta', (req, res) => {
   const s = getSettings(uid(req));
   res.json({
     user: users.publicUser(req.user),
+    team: {isOwner: teamOwner(req.user.id)===req.user.id, members: teamForOwner(teamOwner(req.user.id)), selectedId:uid(req)},
     bookingUrl: bookingUrl(req.user),
     businessName: s.business.name,
     brandColor: s.brandColor,
@@ -71,18 +159,18 @@ appRouter.post('/onboarding', (req, res) => {
 });
 
 appRouter.put('/profile', (req, res) => {
-  const user = users.updateProfile(uid(req), req.body || {});
+  const user = users.updateProfile(req.user.id, req.body || {});
   res.json({ user: users.publicUser(user), bookingUrl: bookingUrl(user) });
 });
 
 appRouter.post('/password', async (req, res) => {
-  const user = await users.changePassword(uid(req), req.body || {});
+  const user = await users.changePassword(req.user.id, req.body || {});
   startSession(res, user); // verze relace se změnila → vydat novou cookie
   res.json({ ok: true });
 });
 
 appRouter.delete('/account', async (req, res) => {
-  const user = users.getUserRow(uid(req));
+  const user = users.getUserRow(req.user.id);
   if (user.password_hash) await users.deleteAccount(user.id, req.body?.password); // ověří heslo před čímkoliv dalším
   await google.disconnect(user.id);
   if (!user.password_hash) await users.deleteAccount(user.id);

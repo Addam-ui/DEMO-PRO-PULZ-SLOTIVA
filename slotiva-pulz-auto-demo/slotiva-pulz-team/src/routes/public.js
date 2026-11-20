@@ -1,4 +1,5 @@
 import express from 'express';
+import { publicBarbers, memberFor } from '../team.js';
 import { DateTime } from 'luxon';
 import { config } from '../config.js';
 import { getSettings } from '../settings.js';
@@ -39,6 +40,7 @@ publicRouter.get('/pages/:slug', (req, res) => {
   const s = getSettings(user.id);
   res.json({
     slug: user.slug,
+    barbers: publicBarbers(user.id),
     business: s.business,
     brandColor: s.brandColor,
     timezone: s.timezone,
@@ -49,15 +51,17 @@ publicRouter.get('/pages/:slug', (req, res) => {
     requirePhone: s.requirePhone,
     confirmationMessage: s.confirmationMessage,
     emailsEnabled: mailEnabled(),
-    services: listServices(user.id, { activeOnly: true }).map(({ id, name, description, durationMin, price, color }) => ({
-      id, name, description, durationMin, price, color,
-    })),
+    services: (publicBarbers(user.id).length ? publicBarbers(user.id).map(b=>b.id) : [user.id]).flatMap(barberId =>
+      listServices(barberId,{activeOnly:true}).map(({id,name,description,durationMin,price,color})=>({
+        id,name,description,durationMin,price,color,barberId,
+      }))),
   });
 });
 
 publicRouter.get('/pages/:slug/availability', rateLimit({ windowMs: 60_000, max: 90 }), async (req, res) => {
   const user = ownerOf(req.params.slug);
-  res.json(await bookings.getAvailability(user.id, {
+  const barberId = req.query.barberId ? memberFor(user.id,req.query.barberId) : user.id;
+  res.json(await bookings.getAvailability(barberId, {
     serviceId: req.query.serviceId,
     from: String(req.query.from || ''),
     to: String(req.query.to || ''),
@@ -71,7 +75,8 @@ publicRouter.post(
     const body = req.body || {};
     if (body.website) throw badRequest('Rezervaci se nepodařilo odeslat.'); // skryté pole pro roboty
     const user = ownerOf(req.params.slug);
-    const row = await bookings.createBooking(user.id, body, { source: 'web' });
+    const barberId = body.barberId ? memberFor(user.id,body.barberId) : user.id;
+    const row = await bookings.createBooking(barberId, body, { source: 'web' });
     res.status(201).json({ booking: bookings.publicBookingView(row) });
   },
 );

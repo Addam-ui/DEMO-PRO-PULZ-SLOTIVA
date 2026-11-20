@@ -11,6 +11,7 @@ import { onGoogleConnected } from '../bookings.js';
 import { mailEnabled, sendMail } from '../mailer.js';
 import { passwordResetEmail } from '../emails.js';
 import * as v from '../validate.js';
+import { ensurePulzDemo } from '../pulz-auto.js';
 
 /* ───────────── /api/auth ───────────── */
 
@@ -39,6 +40,10 @@ authApi.post('/register', authLimiter, async (req, res) => {
   const body = req.body || {};
   if (body.website) throw badRequest('Registraci se nepodařilo dokončit.'); // skryté pole pro roboty
   const user = await users.registerUser(body);
+  // Demo pouze na nové instanci / pro první účet. Bez zásahu do jiných uživatelů.
+  if (db.prepare('SELECT COUNT(*) AS n FROM users').get().n === 1) {
+    try { ensurePulzDemo(user.id); } catch (err) { console.error('PULZ demo seed:', err); }
+  }
   startSession(res, user);
   console.log(`✦  Nový účet: ${user.email} (/${user.slug})`);
   res.status(201).json({ user: users.publicUser(user) });

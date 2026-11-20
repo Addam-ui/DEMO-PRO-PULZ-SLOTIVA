@@ -12,7 +12,7 @@ async function request(url, { method = 'GET', body } = {}) {
     res = await fetch(url, {
       method,
       credentials: 'same-origin',
-      headers: body !== undefined ? { 'Content-Type': 'application/json' } : {},
+      headers: { ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}), ...(url.startsWith('/api/app') && sessionStorage.getItem('pulz-barber') ? {'X-Slotiva-Barber': sessionStorage.getItem('pulz-barber')} : {}) },
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch {

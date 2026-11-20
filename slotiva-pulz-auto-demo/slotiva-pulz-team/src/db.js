@@ -133,3 +133,13 @@ function addColumn(table, column, definition) {
 addColumn('users', 'is_admin', 'INTEGER NOT NULL DEFAULT 0');
 addColumn('users', 'blocked_at', 'TEXT');
 addColumn('users', 'note', "TEXT NOT NULL DEFAULT ''");
+
+// PULZ: týmové účty s jedním vlastníkem a oddělenými kalendáři.
+db.exec(`CREATE TABLE IF NOT EXISTS team_members (
+  owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  member_id INTEGER NOT NULL UNIQUE REFERENCES users(id) ON DELETE CASCADE,
+  display_name TEXT NOT NULL,
+  active INTEGER NOT NULL DEFAULT 1,
+  PRIMARY KEY(owner_id, member_id),
+  CHECK(owner_id <> member_id)
+);`);

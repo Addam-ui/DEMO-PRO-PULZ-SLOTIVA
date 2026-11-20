@@ -8,11 +8,13 @@ import * as services from './views/services.js';
 import * as settings from './views/settings.js';
 import * as integration from './views/integration.js';
 import * as admin from './views/admin.js';
+import * as team from './views/team.js';
 
 const ROUTES = [
   { path: 'prehled', title: 'Přehled', icon: 'overview', view: overview },
   { path: 'rezervace', title: 'Rezervace', icon: 'list', view: bookings },
   { path: 'kalendar', title: 'Kalendář', icon: 'calendar', view: calendar },
+  { path: 'tym', title: 'Správa týmu', icon: 'user', view: team },
   { path: 'sluzby', title: 'Služby', icon: 'layers', view: services, group: 'Nastavení' },
   { path: 'nastaveni', title: 'Nastavení', icon: 'sliders', view: settings },
   { path: 'napojeni', title: 'Kalendář a web', icon: 'plug', view: integration },

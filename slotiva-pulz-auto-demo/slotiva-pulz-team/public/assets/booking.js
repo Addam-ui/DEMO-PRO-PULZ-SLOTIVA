@@ -14,6 +14,7 @@ const state = {
   config: null,
   step: 'service',
   service: null,
+  barberId: null,
   month: null, // { year, month }
   availability: {}, // `${serviceId}:${RRRR-MM}` → { 'RRRR-MM-DD': ['09:00', …] }
   loading: false,
@@ -37,7 +38,7 @@ const monthOf = (date) => ({ year: Number(date.slice(0, 4)), month: Number(date.
 const monthIndex = ({ year, month }) => year * 12 + month - 1;
 const monthFromIndex = (i) => ({ year: Math.floor(i / 12), month: (i % 12) + 1 });
 const addDays = (date, n) => new Date(Date.parse(`${date}T12:00:00Z`) + n * 86400000).toISOString().slice(0, 10);
-const monthKey = () => `${state.service?.id}:${state.month.year}-${pad(state.month.month)}`;
+const monthKey = () => `${state.barberId}:${state.service?.id}:${state.month.year}-${pad(state.month.month)}`;
 const maxDate = () => addDays(state.config.today, state.config.maxAdvanceDays);
 
 function endTime(time, durationMin) {
@@ -169,6 +170,7 @@ async function submit(event) {
       method: 'POST',
       body: {
         serviceId: state.service.id,
+        barberId: state.barberId || state.service.barberId,
         date: state.date,
         time: state.time,
         ...state.form,
@@ -262,12 +264,17 @@ function stepper() {
 
 function viewService() {
   const { services } = state.config;
+  const barbers=state.config.barbers||[];
+  const available=barbers.length&&!state.barberId?[]:state.barberId?services.filter(s=>s.barberId===state.barberId):services;
   return h('section', { class: 'view' },
+    barbers.length ? h('div',{style:{marginBottom:'18px'}},
+      h('h3',{},'Vyberte barbera'),
+      h('div',{class:'service-list'},barbers.map(b=>h('button',{type:'button',class:`service-card${state.barberId===b.id?' is-selected':''}`,onClick:()=>{state.barberId=b.id;state.service=null;state.date=null;state.time=null;state.availability={};render();}},b.name)))) : null,
     h('div', { class: 'panel-head' },
       h('h2', {}, 'Vyberte službu'),
       h('p', {}, 'Po výběru služby uvidíte volné termíny.')),
-    services.length
-      ? h('div', { class: 'service-list' }, services.map((s) => h('button', {
+    available.length
+      ? h('div', { class: 'service-list' }, available.map((s) => h('button', {
         type: 'button',
         class: `service-card${state.service?.id === s.id ? ' is-selected' : ''}`,
         style: { '--service-color': s.color },
@@ -547,7 +554,7 @@ async function init() {
   const preselected = params.get('service') || params.get('sluzba');
   const service = state.config.services.find((s) => String(s.id) === preselected)
     || (state.config.services.length === 1 ? state.config.services[0] : null);
-  if (service) selectService(service);
+  if (service) { state.barberId=service.barberId||null; selectService(service); }
   else render();
 }
 
