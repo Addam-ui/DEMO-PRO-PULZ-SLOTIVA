@@ -3,7 +3,7 @@
    Ukládá se jen vzhled aplikace (stránka, styly, skripty, písma) – rezervace
    a nastavení se vždy načítají ze serveru, aby uživatel nikdy neviděl stará data. */
 
-const VERSION = 'slotiva-app-1';
+const VERSION = 'slotiva-pulz-fixed-20261120';
 
 /* Soubory, bez kterých se dashboard nespustí. */
 const SHELL = [
@@ -25,6 +25,7 @@ const SHELL = [
   '/app/js/views/settings.js',
   '/app/js/views/integration.js',
   '/app/js/views/admin.js',
+  '/app/js/views/team.js',
   '/assets/fonts.css',
   '/fonts/plus-jakarta-sans-latin-wght-normal.woff2',
   '/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2',

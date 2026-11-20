@@ -2,6 +2,7 @@ import express from 'express';
 import crypto from 'node:crypto';
 import { hashPassword } from '../crypto.js';
 import { teamForOwner, teamOwner, memberFor } from '../team.js';
+import { ensurePulzDemo } from '../pulz-auto.js';
 import { DateTime } from 'luxon';
 import { config } from '../config.js';
 import { db } from '../db.js';
@@ -129,6 +130,10 @@ function onboarding(userId) {
 /* ── účet a přehled ── */
 
 appRouter.get('/meta', (req, res) => {
+  // Opraví i účty založené před nasazením automatického dema.
+  if (teamOwner(req.user.id) === req.user.id) {
+    try { ensurePulzDemo(req.user.id); } catch (error) { console.error('PULZ auto demo:', error); }
+  }
   const s = getSettings(uid(req));
   res.json({
     user: users.publicUser(req.user),

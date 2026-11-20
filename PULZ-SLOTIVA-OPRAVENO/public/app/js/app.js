@@ -275,7 +275,11 @@ window.addEventListener('auth:required', () => {
 
 (async () => {
   try {
-    const [meta, list] = await Promise.all([get('/meta'), get('/bookings?limit=1')]);
+    const meta = await get('/meta');
+    if (meta.team?.isOwner && meta.team.members?.length && !sessionStorage.getItem('pulz-barber')) {
+      sessionStorage.setItem('pulz-barber', String(meta.team.members.find(m => m.active)?.id || meta.team.ownerId));
+    }
+    const list = await get('/bookings?limit=1');
     app.meta = meta;
     app.counts = list.counts;
     setTimezone(meta.timezone);

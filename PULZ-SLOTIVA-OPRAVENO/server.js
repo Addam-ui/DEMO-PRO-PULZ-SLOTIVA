@@ -35,7 +35,7 @@ app.use('/auth', oauthRoutes);
 
 /* ── statické soubory ── */
 app.use('/fonts', express.static(FONTS_DIR, { maxAge: '365d', immutable: true }));
-app.use(express.static(PUBLIC_DIR, { index: false, maxAge: config.isProduction ? '1h' : 0 }));
+app.use(express.static(PUBLIC_DIR, { index: false, maxAge: 0, setHeaders(res, file) { if (file.includes('/app/')) res.setHeader('Cache-Control', 'no-cache, must-revalidate'); } }));
 
 /* ── stránky ── */
 const send = (file) => (req, res) => res.sendFile(path.join(PUBLIC_DIR, file));
