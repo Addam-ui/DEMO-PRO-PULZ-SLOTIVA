@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ochrana osobních údajů – Slotiva</title>
+  <meta name="description" content="Jak Slotiva zpracovává osobní údaje uživatelů i jejich klientů a jak nakládá s daty z Google Kalendáře.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/fonts.css">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Slotiva – úvod">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg-head" x1="6" y1="4" x2="44" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#1ec8bf"/><stop offset="1" stop-color="#0a7c80"/></linearGradient></defs>
+          <rect width="48" height="48" rx="14" fill="url(#lg-head)"/>
+          <rect x="11" y="11.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+          <rect x="11" y="20.5" width="26" height="7" rx="3.5" fill="#fff"/>
+          <rect x="19" y="29.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+        </svg>
+        <span class="brand-word">Slotiva</span>
+      </a>
+      <div class="site-actions">
+        <a class="login" href="/prihlaseni">Přihlásit se</a>
+        <a class="btn btn-primary" href="/registrace">Vyzkoušet zdarma</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="legal-page">
+    <div class="container">
+      <p class="legal-kicker">Právní informace</p>
+      <h1>Ochrana osobních údajů</h1>
+      <p class="legal-lead">Tento dokument popisuje, jaké údaje Slotiva zpracovává, proč je zpracovává a jak s nimi nakládá. Platí pro rezervační systém dostupný na adrese <span data-host>slotiva.cz</span>.</p>
+      <p class="legal-updated">Účinné od <strong data-updated>1. 1. 2026</strong></p>
+
+      <h2>1. Kdo údaje zpracovává</h2>
+      <p>Provozovatelem služby Slotiva a správcem údajů o uživatelských účtech je:</p>
+      <div class="legal-box">
+        <p><strong data-operator-name>[DOPLŇTE jméno nebo název firmy]</strong><br>
+        <span data-operator-address>[DOPLŇTE adresu sídla]</span><br>
+        IČO: <span data-operator-id>[DOPLŇTE]</span><br>
+        E-mail: <a href="mailto:podpora@slotiva.cz" data-operator-email>podpora@slotiva.cz</a></p>
+      </div>
+      <p>Provozovatel nejmenoval pověřence pro ochranu osobních údajů; ve všech věcech se na něj obracejte na uvedeném e-mailu.</p>
+
+      <h2>2. Dvě role: uživatel a jeho klient</h2>
+      <p>Slotiva rozlišuje dvě skupiny lidí a u každé má jinou roli:</p>
+      <ul>
+        <li><strong>Uživatel</strong> – ten, kdo si ve Slotivě založí účet a přijímá rezervace. Vůči jeho údajům je provozovatel <em>správcem</em>.</li>
+        <li><strong>Klient uživatele</strong> – ten, kdo si na rezervační stránce uživatele zarezervuje termín. Vůči těmto údajům je správcem <em>uživatel</em> a provozovatel Slotivy pouze <em>zpracovatelem</em>: údaje klientů zpracovává podle pokynů uživatele a nevyužívá je pro vlastní účely.</li>
+      </ul>
+
+      <h2>3. Jaké údaje zpracováváme</h2>
+      <h3>Údaje uživatele (účet)</h3>
+      <ul>
+        <li>jméno nebo název firmy, e-mail, adresa rezervační stránky;</li>
+        <li>heslo – ukládá se výhradně jako nevratný otisk (scrypt), nikdy v čitelné podobě;</li>
+        <li>identifikátor účtu Google, pokud se přihlašujete přes Google;</li>
+        <li>nastavení podniku, které si sami vyplníte: kontaktní údaje, otevírací doba, služby a ceny;</li>
+        <li>datum registrace a posledního přihlášení.</li>
+      </ul>
+      <h3>Údaje klienta (rezervace)</h3>
+      <ul>
+        <li>jméno, e-mail, telefon a poznámka, kterou klient vyplní v rezervačním formuláři;</li>
+        <li>zvolená služba, datum a čas termínu, stav rezervace.</li>
+      </ul>
+      <h3>Technické údaje</h3>
+      <ul>
+        <li>IP adresa v provozních záznamech serveru – slouží k omezení počtu pokusů o přihlášení a rezervaci (ochrana proti zneužití);</li>
+        <li>přihlašovací cookie <code>slotiva_session</code>, případně dočasná cookie při přihlašování přes Google. Slotiva nepoužívá žádné analytické ani reklamní cookies a nezapojuje sledovací skripty třetích stran. Písmo je hostované přímo na našem serveru, takže se nenačítá nic z cizích domén.</li>
+      </ul>
+
+      <h2>4. Údaje z Google Kalendáře</h2>
+      <p>Pokud si uživatel připojí Google Kalendář, Slotiva od Googlu získá:</p>
+      <ul>
+        <li><strong>e-mail a jméno účtu Google</strong> – pro identifikaci připojeného kalendáře;</li>
+        <li><strong>seznam kalendářů</strong> (oprávnění <code>calendar.readonly</code>) – abyste si mohli vybrat, kam se rezervace zapisují a které kalendáře se kontrolují na obsazenost;</li>
+        <li><strong>události ve zvolených kalendářích</strong> (oprávnění <code>calendar.events</code>) – čte se čas začátku a konce, aby se obsazené termíny nenabízely, a zapisují a upravují se události vzniklé z rezervací.</li>
+      </ul>
+      <p class="legal-callout">Použití a předávání informací získaných z rozhraní Google API službou Slotiva se řídí <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">zásadami Google API Services User Data Policy</a> včetně požadavků na omezené použití (Limited Use).</p>
+      <p>Konkrétně to znamená, že data z Google Kalendáře:</p>
+      <ul>
+        <li>používáme <strong>jen</strong> pro funkce rezervačního systému, které jsou zde popsané;</li>
+        <li><strong>nepředáváme</strong> třetím stranám s výjimkou případů nutných pro provoz služby, kvůli bezpečnosti nebo na základě zákona;</li>
+        <li><strong>nepoužíváme</strong> k reklamě ani je neprodáváme;</li>
+        <li><strong>nečteme</strong> lidským okem, s výjimkou výslovného souhlasu uživatele při řešení konkrétního problému, kvůli bezpečnosti nebo když to ukládá zákon.</li>
+      </ul>
+      <p>Přístupové tokeny ke Googlu jsou v databázi uložené zašifrovaně (AES-256-GCM). Přístup můžete kdykoliv zrušit v dashboardu tlačítkem „Odpojit kalendář“ nebo přímo u Googlu na stránce <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">myaccount.google.com/permissions</a>. Po odpojení token okamžitě smažeme a zneplatníme u Googlu.</p>
+
+      <h2>5. Proč údaje zpracováváme</h2>
+      <table class="legal-table">
+        <thead><tr><th>Účel</th><th>Právní základ</th></tr></thead>
+        <tbody>
+          <tr><td>Vedení účtu a poskytování rezervačního systému</td><td>plnění smlouvy (čl. 6 odst. 1 písm. b GDPR)</td></tr>
+          <tr><td>Zpracování a potvrzení rezervace klienta</td><td>plnění smlouvy mezi klientem a uživatelem</td></tr>
+          <tr><td>Zápis rezervace do Google Kalendáře</td><td>souhlas uživatele udělený při připojení kalendáře</td></tr>
+          <tr><td>Provozní e-maily (potvrzení, zrušení, upozornění na odpojený kalendář)</td><td>plnění smlouvy</td></tr>
+          <tr><td>Zabezpečení služby, omezení počtu pokusů, provozní záznamy</td><td>oprávněný zájem (čl. 6 odst. 1 písm. f GDPR)</td></tr>
+          <tr><td>Účetní doklady, pokud vzniknou</td><td>plnění právní povinnosti</td></tr>
+        </tbody>
+      </table>
+      <p>Údaje nepoužíváme k profilování ani k automatizovanému rozhodování s právními účinky a neposíláme marketingové e-maily bez souhlasu.</p>
+
+      <h2>6. Komu se údaje dostanou</h2>
+      <ul>
+        <li><strong>Google Ireland Limited / Google LLC</strong> – pokud je připojený kalendář, putují do něj údaje o rezervaci (služba, čas, jméno klienta a kontakt), aby je uživatel viděl ve svém kalendáři.</li>
+        <li><strong>Poskytovatel hostingu</strong> – server, na kterém aplikace a databáze běží (<span data-hosting>[DOPLŇTE, např. Railway / Render / vlastní server v ČR]</span>).</li>
+        <li><strong>Poskytovatel e-mailové schránky</strong> – přes něj odcházejí potvrzení rezervací.</li>
+        <li><strong>Správce Slotivy</strong> – vidí seznam účtů, jejich e-maily a souhrnné počty rezervací. Nevidí obsah rezervací ani jejich klienty.</li>
+      </ul>
+      <p>Údaje neprodáváme a nepředáváme nikomu dalšímu. K přenosu mimo EU může dojít jen v rámci služeb Google, které se řídí standardními smluvními doložkami a rámcem EU–US Data Privacy Framework.</p>
+
+      <h2>7. Jak dlouho údaje uchováváme</h2>
+      <ul>
+        <li><strong>Účet a jeho nastavení</strong> – po dobu existence účtu. Po smazání účtu se okamžitě a nevratně smaže i vše, co k němu patří: rezervace, služby, nastavení i token ke Googlu.</li>
+        <li><strong>Rezervace</strong> – dokud je uživatel nesmaže spolu s účtem; slouží jako historie objednávek.</li>
+        <li><strong>Odkazy pro obnovu hesla</strong> – 1 hodina (24 hodin u odkazu vytvořeného správcem).</li>
+        <li><strong>Provozní záznamy serveru</strong> – v řádu dnů, podle nastavení hostingu.</li>
+      </ul>
+      <p>Události, které Slotiva zapsala do Google Kalendáře, zůstávají v kalendáři uživatele i po smazání účtu – jsou pak plně v jeho rukou.</p>
+
+      <h2>8. Vaše práva</h2>
+      <p>Máte právo na přístup ke svým údajům, na jejich opravu, výmaz, omezení zpracování, na přenositelnost, právo vznést námitku proti zpracování z oprávněného zájmu a právo odvolat souhlas. Většinu z toho zvládnete sami přímo v aplikaci: údaje upravíte v Nastavení, rezervace vyexportujete do CSV a účet i se vším, co k němu patří, smažete tlačítkem v Nastavení.</p>
+      <p>Pokud si myslíte, že s vašimi údaji nakládáme špatně, ozvěte se nám na uvedený e-mail. Máte také právo podat stížnost u <a href="https://www.uoou.cz/" target="_blank" rel="noopener">Úřadu pro ochranu osobních údajů</a>, Pplk. Sochora 27, Praha 7.</p>
+      <p>Jste-li klientem některého z uživatelů Slotivy a chcete smazat svoji rezervaci, obraťte se prosím přímo na něj – je správcem těchto údajů. Rezervaci můžete také zrušit odkazem v potvrzovacím e-mailu.</p>
+
+      <h2>9. Zabezpečení</h2>
+      <p>Komunikace probíhá výhradně šifrovaně (HTTPS). Hesla ukládáme jako nevratný otisk, tokeny ke Googlu šifrujeme, přihlášení drží podepsaná cookie s příznaky HttpOnly a Secure. Aplikace je chráněná proti CSRF, omezuje počet pokusů o přihlášení a data jednotlivých uživatelů jsou od sebe oddělená na úrovni každého databázového dotazu.</p>
+
+      <h2>10. Změny</h2>
+      <p>Tento dokument můžeme upravit, pokud se změní fungování služby nebo právní předpisy. O podstatné změně dáme uživatelům vědět e-mailem nebo upozorněním v dashboardu alespoň 14 dní předem.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Slotiva">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:28px;height:28px">
+          <defs><linearGradient id="lg-foot" x1="6" y1="4" x2="44" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#1ec8bf"/><stop offset="1" stop-color="#0a7c80"/></linearGradient></defs>
+          <rect width="48" height="48" rx="14" fill="url(#lg-foot)"/>
+          <rect x="11" y="11.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+          <rect x="11" y="20.5" width="26" height="7" rx="3.5" fill="#fff"/>
+          <rect x="19" y="29.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+        </svg>
+        <span class="brand-word" style="font-size:18px">Slotiva</span>
+      </a>
+      <span>© 2026 Slotiva · Online rezervace pro každého</span>
+      <nav aria-label="Patička">
+        <a href="/podminky">Podmínky</a>
+        <a href="/ochrana-osobnich-udaju">Ochrana údajů</a>
+        <a href="/prihlaseni">Přihlásit se</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="/assets/legal.js"></script>
+</body>
+</html>

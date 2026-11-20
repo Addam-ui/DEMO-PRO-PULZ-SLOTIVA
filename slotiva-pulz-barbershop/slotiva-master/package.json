@@ -1,0 +1,27 @@
+{
+  "name": "slotiva",
+  "version": "2.0.0",
+  "description": "Slotiva – online rezervace pro více uživatelů s napojením na Google Kalendář, dashboardem a widgetem pro web.",
+  "type": "module",
+  "main": "server.js",
+  "private": true,
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server.js",
+    "test": "node --disable-warning=ExperimentalWarning --test",
+    "admin": "node --disable-warning=ExperimentalWarning scripts/admin.js",
+    "demo": "node --disable-warning=ExperimentalWarning scripts/demo.js",
+    "demo:pulz": "node --disable-warning=ExperimentalWarning scripts/pulz-demo.js",
+    "ikony": "node --disable-warning=ExperimentalWarning scripts/icons.js"
+  },
+  "dependencies": {
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
+    "@googleapis/calendar": "^19.0.0",
+    "express": "^5.2.1",
+    "luxon": "^3.7.2",
+    "nodemailer": "^10.0.6"
+  }
+}

@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slotiva – online rezervace, které se samy zapíšou do Google Kalendáře</title>
+  <meta name="description" content="Vlastní rezervační stránka, napojení na Google Kalendář jedním kliknutím a přehledný dashboard. Pro kadeřnictví, kosmetiku, lektory, poradce i celé týmy.">
+  <meta name="theme-color" content="#0a7c80">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/fonts/plus-jakarta-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/fonts.css">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Slotiva – úvod">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg-head" x1="6" y1="4" x2="44" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#1ec8bf"/><stop offset="1" stop-color="#0a7c80"/></linearGradient></defs>
+          <rect width="48" height="48" rx="14" fill="url(#lg-head)"/>
+          <rect x="11" y="11.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+          <rect x="11" y="20.5" width="26" height="7" rx="3.5" fill="#fff"/>
+          <rect x="19" y="29.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+        </svg>
+        <span class="brand-word">Slotiva</span>
+      </a>
+      <nav class="site-nav" aria-label="Hlavní">
+        <a href="#funkce">Funkce</a>
+        <a href="#jak-to-funguje">Jak to funguje</a>
+        <a href="#pro-tymy">Pro týmy</a>
+      </nav>
+      <div class="site-actions">
+        <a class="login" href="/prihlaseni">Přihlásit se</a>
+        <a class="btn btn-primary" href="/registrace">Vyzkoušet zdarma</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>Rezervace, které se <span class="hl">samy zapíšou</span> do kalendáře.</h1>
+          <p class="lead">Slotiva vám dá vlastní rezervační stránku. Klienti si vyberou volný čas a vy máte událost okamžitě v Google Kalendáři. Žádné telefonování, přepisování ani dvojité termíny.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="/registrace">
+              Vytvořit rezervační stránku
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+            <a class="btn btn-ghost btn-lg" href="/ukazka-webu">Jak to vidí klienti</a>
+          </div>
+          <ul class="hero-points">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Hotovo za 5 minut</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Česky a pro mobil</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Vložíte na svůj web</li>
+          </ul>
+        </div>
+
+        <div class="showcase" aria-hidden="true">
+          <div class="mock">
+            <div class="mock-bar"><i></i><i></i><i></i><div class="mock-url">🔒 slotiva.cz/jana-novakova</div></div>
+            <div class="mock-body">
+              <div class="mock-side">
+                <div class="mock-avatar">JN</div>
+                <div class="mock-name">Jana Nováková</div>
+                <div class="mock-sub">Kosmetický salon</div>
+                <div class="mock-service is-active"><b>Kosmetické ošetření</b>60 min · 890 Kč</div>
+                <div class="mock-service"><b>Úprava obočí</b>30 min · 350 Kč</div>
+                <div class="mock-service"><b>Konzultace</b>15 min · zdarma</div>
+              </div>
+              <div class="mock-main">
+                <div class="mock-month">Září 2026 <span>‹ ›</span></div>
+                <div class="mock-cal">
+                  <i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i>
+                  <i>8</i><i>9</i><i>10</i><i class="on">11</i><i>12</i><i>13</i><i class="on">14</i>
+                  <i class="sel">15</i><i class="on">16</i><i class="on">17</i><i class="on">18</i><i>19</i><i>20</i><i class="on">21</i>
+                  <i class="on">22</i><i class="on">23</i><i class="on">24</i><i class="on">25</i><i>26</i><i>27</i><i class="on">28</i>
+                </div>
+                <div class="mock-slots"><span>9:00</span><span class="sel">10:30</span><span>11:30</span><span>13:00</span><span>14:30</span><span>16:00</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="float float-event">
+            <div class="gcal">15</div>
+            <div><b>Kosmetické ošetření – Eva M.</b><span>Út 15. 9. · 10:30–11:30</span></div>
+            <div class="float-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="audience" aria-label="Pro koho">
+      <div class="container">
+        <p>Pro kadeřnictví, kosmetiku, masáže, fyzioterapeuty, lektory a trenéry, poradce i fotografy.</p>
+      </div>
+    </section>
+
+    <section class="section" id="funkce">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Funkce</span>
+          <h2>Všechno, co k rezervacím potřebujete</h2>
+          <p>Bez složitého nastavování. Připojíte kalendář, nastavíte služby a můžete přijímat první rezervace.</p>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4M9 15l2 2 4-4"/></svg></div>
+            <h3>Google Kalendář jedním kliknutím</h3>
+            <p>Přihlásíte se přes Google a je hotovo. Každá rezervace se sama zapíše a obsazené časy se klientům nenabídnou.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon coral"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+            <h3>Vlastní rezervační stránka</h3>
+            <p>Adresa jako slotiva.cz/vase-jmeno s vaší barvou, službami a cenami. Stačí ji poslat klientům nebo dát na Instagram.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M8.5 12l2.5 2.5 4.5-4.5"/></svg></div>
+            <h3>Žádné dvojité termíny</h3>
+            <p>Těsně před potvrzením se obsazenost ověří znovu. Dovolenou nebo pauzu si jen zapíšete do kalendáře.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 4l-4 16"/></svg></div>
+            <h3>Vložení na váš web</h3>
+            <p>Tlačítko, vyskakovací okno nebo formulář přímo ve stránce. Funguje s WordPressem, Wixem i Webnode.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon coral"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7.5" height="9" rx="1.8"/><rect x="13.5" y="3" width="7.5" height="5.5" rx="1.8"/><rect x="13.5" y="11.5" width="7.5" height="9.5" rx="1.8"/><rect x="3" y="15" width="7.5" height="6" rx="1.8"/></svg></div>
+            <h3>Přehledný dashboard</h3>
+            <p>Dnešní klienti, tržby, vytíženost, týdenní kalendář a export do Excelu. Rezervaci po telefonu přidáte jedním kliknutím.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg></div>
+            <h3>Potvrzení a připomínky</h3>
+            <p>Klient dostane potvrzení s odkazem na zrušení a událostí do kalendáře. Vy upozornění na každou novou rezervaci.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="jak-to-funguje">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Jak to funguje</span>
+          <h2>Tři kroky a přijímáte rezervace</h2>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Vytvořte si účet</h3>
+            <p>E-mailem nebo přes Google. Rovnou dostanete svou rezervační stránku s ukázkovými službami.</p>
+            <div class="step-visual"><div class="url-chip">slotiva.cz/<span>vase-jmeno</span></div></div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Připojte Google Kalendář</h3>
+            <p>Jedno kliknutí a souhlas v Googlu. Vyberete, do kterého kalendáře se mají rezervace zapisovat.</p>
+            <div class="step-visual">
+              <div class="connect-chip"><div class="gcal" style="width:30px;height:30px;font-size:11px;padding-top:6px">31</div>Google Kalendář<span class="ok">Připojeno</span></div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Sdílejte odkaz nebo vložte na web</h3>
+            <p>Pošlete odkaz klientům, nebo vložte jeden řádek kódu na svůj web.</p>
+            <div class="step-visual"><div class="snippet">&lt;div <em>data-slotiva</em>="vase-jmeno"&gt;&lt;/div&gt;</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pro-tymy">
+      <div class="container split">
+        <div>
+          <span class="eyebrow">Pro jednotlivce i týmy</span>
+          <h2>Každý má svůj kalendář a své klienty</h2>
+          <p class="lead">Slotivu může používat kolik lidí chcete. Každý má vlastní účet, rezervační stránku, služby i Google Kalendář, a data ostatních nevidí.</p>
+          <ul class="checks">
+            <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Vlastní otevírací doba</b> – každý si nastaví, kdy pracuje.</span></li>
+            <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Obousměrná synchronizace</b> – smazaná událost v kalendáři zruší rezervaci.</span></li>
+            <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span><b>Soukromí</b> – přihlašovací tokeny Googlu jsou uložené šifrovaně.</span></li>
+          </ul>
+        </div>
+        <div class="people" aria-hidden="true">
+          <div class="person"><div class="person-avatar" style="background:linear-gradient(135deg,#ff9a8b,#ff6a88)">JN</div><div><b>Jana Nováková</b><span>slotiva.cz/jana-novakova</span></div><span class="cal-state">Kalendář připojen</span></div>
+          <div class="person"><div class="person-avatar" style="background:linear-gradient(135deg,#1ec8bf,#0a7c80)">PS</div><div><b>Petr Svoboda</b><span>slotiva.cz/fyzio-svoboda</span></div><span class="cal-state">Kalendář připojen</span></div>
+          <div class="person"><div class="person-avatar" style="background:linear-gradient(135deg,#34d399,#0ea5e9)">LD</div><div><b>Lucie Dvořáková</b><span>slotiva.cz/lekce-lucie</span></div><span class="cal-state">Kalendář připojen</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <div class="cta-card">
+          <h2>Začněte přijímat rezervace ještě dnes</h2>
+          <p>Založení účtu zabere minutu. Kalendář připojíte hned potom.</p>
+          <a class="btn btn-primary btn-lg" href="/registrace">Vytvořit účet zdarma</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <a class="brand" href="/" aria-label="Slotiva">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true" style="width:28px;height:28px">
+          <defs><linearGradient id="lg-foot" x1="6" y1="4" x2="44" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#1ec8bf"/><stop offset="1" stop-color="#0a7c80"/></linearGradient></defs>
+          <rect width="48" height="48" rx="14" fill="url(#lg-foot)"/>
+          <rect x="11" y="11.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+          <rect x="11" y="20.5" width="26" height="7" rx="3.5" fill="#fff"/>
+          <rect x="19" y="29.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+        </svg>
+        <span class="brand-word" style="font-size:18px">Slotiva</span>
+      </a>
+      <span>© 2026 Slotiva · Online rezervace pro každého</span>
+      <nav aria-label="Patička">
+        <a href="/podminky">Podmínky</a>
+        <a href="/ochrana-osobnich-udaju">Ochrana údajů</a>
+        <a href="/prihlaseni">Přihlásit se</a>
+        <a href="/registrace">Registrace</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

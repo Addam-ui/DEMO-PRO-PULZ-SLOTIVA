@@ -1,0 +1,8 @@
+node_modules/
+data/
+.env
+*.log
+# Klíč servisního účtu Google – nikdy necommitovat
+google-key*.json
+service-account*.json
+credentials*.json

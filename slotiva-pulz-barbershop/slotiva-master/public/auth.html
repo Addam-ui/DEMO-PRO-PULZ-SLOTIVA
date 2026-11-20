@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Přihlášení – Slotiva</title>
+  <meta name="theme-color" content="#0a7c80">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/fonts.css">
+  <link rel="stylesheet" href="/assets/site.css">
+  <script type="module" src="/assets/auth.js"></script>
+</head>
+<body>
+  <div class="auth">
+    <main class="auth-main">
+      <a class="brand" href="/" aria-label="Slotiva – úvod">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg-auth" x1="6" y1="4" x2="44" y2="46" gradientUnits="userSpaceOnUse"><stop stop-color="#1ec8bf"/><stop offset="1" stop-color="#0a7c80"/></linearGradient></defs>
+          <rect width="48" height="48" rx="14" fill="url(#lg-auth)"/>
+          <rect x="11" y="11.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+          <rect x="11" y="20.5" width="26" height="7" rx="3.5" fill="#fff"/>
+          <rect x="19" y="29.5" width="18" height="7" rx="3.5" fill="#fff" fill-opacity=".38"/>
+        </svg>
+        <span class="brand-word">Slotiva</span>
+      </a>
+      <div class="auth-card" id="auth-card">
+        <div style="display:grid;place-items:center;min-height:320px;color:var(--ink-3)"><span class="spinner" aria-hidden="true"></span><span class="sr-only">Načítám…</span></div>
+      </div>
+    </main>
+    <aside class="auth-aside" aria-hidden="true">
+      <div class="slot-stack">
+        <div class="slot-row"><time>09:00</time>Konzultace · Petra K.</div>
+        <div class="slot-row"><time>10:30</time>Kosmetické ošetření · Eva M.<span class="ok">V kalendáři</span></div>
+        <div class="slot-row"><time>13:00</time>Úprava obočí · Tereza V.</div>
+      </div>
+      <h2>Rezervace, které se samy zapíšou do kalendáře.</h2>
+      <p>Klienti si vyberou volný čas na vaší stránce a vy máte všechno okamžitě v Google Kalendáři.</p>
+    </aside>
+  </div>
+</body>
+</html>

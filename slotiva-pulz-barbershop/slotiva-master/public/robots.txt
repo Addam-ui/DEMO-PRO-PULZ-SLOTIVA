@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /app/
+Disallow: /api/
+Disallow: /auth/
+Disallow: /prihlaseni
+Disallow: /registrace
+Disallow: /zapomenute-heslo
+Disallow: /nove-heslo
+Disallow: /rezervace/
+Allow: /
